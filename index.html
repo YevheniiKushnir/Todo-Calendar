@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar</title>
+    <link rel="icon" href="./imgs/favicon.svg" />
+
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Atkinson+Hyperlegible:regular,italic,700,700italic"
+      rel="stylesheet"
+    />
+    <script src="./scripts/loginForm.js" type="module" defer></script>
+    <script src="./scripts/main.js" type="module" defer></script>
+  </head>
+  <body>
+    <div class="loginForm__wrapper">
+      <div class="loginForm__content">
+        <form
+          id="signin"
+          class="loginForm"
+          method=""
+          action=""
+          autocomplete="off"
+        >
+          <label class="loginForm__input-wrapper">
+            <input
+              type="text"
+              id="user"
+              name="user"
+              placeholder="Enter username"
+              title="Username must be between 2 and 24 characters long and contain only letters."
+              required
+            />
+          </label>
+          <label class="loginForm__input-wrapper">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter password"
+              title="Password must be between 5 and 26 characters long."
+              required
+            />
+          </label>
+          <label class="loginForm__input-checkbox">
+            <input type="checkbox" class="checkbox-input" />
+            <span class="checkmark"></span>
+            <span>Show your password</span>
+          </label>
+          <button type="submit" disabled>&#x2794;</button>
+          <p class="loginForm__forgotPass">
+            Forgot your password? <a href="#">click here</a>
+          </p>
+        </form>
+        <div class="loginForm__titles">
+          <button class="loginForm__title" id="SignIn">Sign In</button>
+          <button class="loginForm__title" id="SignUp">Sign Up</button>
+        </div>
+        <button class="loginForm__back" id="backBtn">&#x2B05;</button>
+        <div class="custom-alert">
+          <p></p>
+        </div>
+      </div>
+    </div>
+    <div class="calendar">
+      <div class="calendar__header">
+        <div class="calendar__title">
+          <h2 class="calendar__monthYear"></h2>
+          <h3 class="calendar__timeFrame"></h3>
+        </div>
+        <div class="calendar__buttons">
+          <div class="calendar__buttons-block">
+            <button id="prevWeek" class="calendar__button">&lang;</button>
+            <button id="nextWeek" class="calendar__button">&rang;</button>
+          </div>
+          <div class="calendar__buttons-block">
+            <label class="theme-switcher">
+              <input type="checkbox" />
+              <span class="slider"></span>
+            </label>
+            <div class="calendar__account-block">
+              <div class="calendar__account-name"></div>
+              <ul class="calendar__account-menu">
+                <li id="logout">Log out</li>
+              </ul>
+              <button id="account" class="calendar__button"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="calendarGrid" class="calendar__grid"></div>
+      <div class="calendar__footer">
+        <div class="calendar__title">
+          <h2 class="">Sometime</h2>
+        </div>
+        <div class="calendar__sometime sometime"></div>
+      </div>
+      <div class="fullDescription">
+        <div class="fullDescription__content"></div>
+      </div>
+    </div>
+  </body>
+</html>

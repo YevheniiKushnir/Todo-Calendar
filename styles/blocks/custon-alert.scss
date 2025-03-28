@@ -1,0 +1,22 @@
+@use "../utils/utils.scss" as *;
+@use "../theme/colorVariables.css";
+
+.custom-alert {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 20px;
+  border-radius: 20px;
+  background-color: var(--cell);
+  color: var(--text);
+  font-weight: 900;
+  font-size: 1rem;
+  z-index: 3;
+  text-align: center;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+}

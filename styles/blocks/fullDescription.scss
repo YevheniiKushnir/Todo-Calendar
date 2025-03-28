@@ -1,0 +1,295 @@
+@use "../utils/utils.scss" as *;
+@use "../theme/colorVariables.css";
+
+%copyStyleInput {
+  height: $taskBlockHeight;
+  background-color: var(--background);
+  color: var(--text);
+  font-size: 1.2rem;
+  font-family: initial;
+  font-weight: initial;
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: text;
+  width: 100%;
+}
+
+.fullDescription {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+  z-index: 5;
+  height: auto;
+  cursor: pointer;
+  transform: translateY(-100%);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @include transition;
+  &--open {
+    transform: translateY(0);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: var(--cell);
+    width: 100vw;
+    height: 100vh;
+    padding: 10px;
+    overflow: auto;
+
+    @include onTablet {
+      padding: 20px;
+    }
+
+    @include onDesktop {
+      width: 60vw;
+      height: 80vh;
+      border-top-left-radius: 30px;
+      border-bottom-left-radius: 30px;
+    }
+  }
+
+  &__header {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 20px;
+    align-items: center;
+
+    grid-template-areas:
+      "title title"
+      "newTask newTask"
+      "searchInput searchInput"
+      "buttons buttons";
+
+    @include onDesktop {
+      grid-template-areas:
+        "title title"
+        "newTask newTask"
+        "searchInput searchInput"
+        "buttons buttons";
+    }
+    @include onLargeDesktop {
+      grid-template-areas:
+        "title title"
+        "newTask clear"
+        "searchInput buttons";
+    }
+  }
+
+  &__title {
+    color: var(--cell-header);
+    text-align: left;
+    grid-area: title;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: space-between;
+
+    @include onTablet {
+      flex-direction: row;
+    }
+
+    h2 {
+      font-size: 2rem;
+      @include onDesktop {
+        font-size: 3rem;
+      }
+    }
+  }
+
+  &__inputs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    grid-area: searchInput;
+
+    label {
+      @include afterEffect;
+
+      &:first-child {
+        width: 100%;
+      }
+    }
+
+    @include normalizerDateInputs;
+
+    input[type="text"] {
+      width: 100%;
+      position: relative;
+      cursor: text;
+      @extend %copyStyleInput;
+    }
+    input[type="date"]::-webkit-datetime-edit,
+    input[type="date"]::-webkit-inner-spin-button,
+    input[type="date"]::-webkit-clear-button {
+      display: none;
+
+      @include onTablet {
+        display: block;
+      }
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    width: auto;
+    font-size: 0.8rem;
+    grid-area: buttons;
+    justify-self: center;
+    width: 100%;
+    max-width: 400px;
+
+    @include onTablet {
+      font-size: 1rem;
+    }
+    @include onLargeDesktop {
+      justify-self: flex-end;
+    }
+
+    button {
+      display: flex;
+      flex: 1;
+      min-width: 0;
+      align-items: center;
+      justify-content: center;
+      background: var(--cell);
+      padding: 0 40px;
+      color: var(--text);
+      cursor: pointer;
+      font-weight: initial;
+      @include transition;
+      border: 1px solid var(--cell-header);
+      height: $btnSizeMobile;
+      text-transform: uppercase;
+
+      &:first-child {
+        border-top-left-radius: 30px;
+        border-bottom-left-radius: 30px;
+      }
+
+      &:last-child {
+        border-top-right-radius: 30px;
+        border-bottom-right-radius: 30px;
+      }
+
+      &:hover {
+        background-color: var(--cell-header);
+        color: var(--cell);
+      }
+      &:active {
+        @include brightness;
+      }
+      &.active {
+        background-color: var(--cell-header);
+        color: var(--cell);
+      }
+    }
+  }
+
+  &__newTask {
+    position: relative;
+    @include afterEffect;
+    grid-area: newTask;
+
+    input {
+      @extend %copyStyleInput;
+    }
+  }
+
+  &__tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+
+    h2 {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+    }
+  }
+
+  @include normalizerInputs;
+
+  &__task-block {
+    display: grid;
+    align-items: center;
+    row-gap: 10px;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "tools"
+      "taskText"
+      "deadline";
+
+    @include onDesktop {
+      grid-template-areas: "taskText deadline tools";
+    }
+
+    &.done {
+      filter: brightness(0.5);
+    }
+  }
+
+  &__task-tools {
+    display: flex;
+    gap: 5px;
+    height: 100%;
+    grid-area: tools;
+    justify-self: flex-end;
+
+    @include onDesktop {
+      background-color: var(--background);
+      padding: 10px;
+      border-radius: 0;
+      border-top-right-radius: 5px;
+    }
+  }
+
+  &__task-text {
+    padding-right: 10px;
+    min-height: 100%;
+    resize: none;
+    grid-area: taskText;
+    font-size: 1rem;
+
+    @include onDesktop {
+      border-radius: 0;
+      border-top-left-radius: 5px;
+    }
+  }
+
+  &__task-deadline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    @extend %copyStyleInput;
+    cursor: default;
+    @include normalizerDateInputs;
+    height: 100%;
+    font-size: 1rem;
+
+    input[type="date"] {
+      padding: 0;
+    }
+
+    @include onDesktop {
+      flex-direction: column;
+      border-radius: 0;
+      justify-content: center;
+    }
+  }
+}

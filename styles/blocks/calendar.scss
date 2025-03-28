@@ -1,0 +1,309 @@
+@use "../utils/utils.scss" as *;
+@use "../theme/colorVariables.css";
+
+@mixin correctSizeDayTask($count) {
+  max-height: ($taskBlockHeight * ($count + 1)) + ($gapTaskDay * ($count - 1));
+}
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 20px;
+  min-height: 100vh;
+
+  @include onTablet {
+    padding: 40px;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 50px;
+
+    @include onTablet {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  &__title {
+    color: var(--header);
+
+    h2 {
+      font-size: 3rem;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+
+    @include onTablet {
+      align-items: center;
+    }
+  }
+
+  &__buttons-block {
+    display: flex;
+    gap: 10px;
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: var(--cell);
+    color: var(--text);
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 1rem;
+    @include transition;
+    border: 1px solid transparent;
+    height: $btnSizeMobile;
+    aspect-ratio: 1 / 1;
+
+    @include onTablet {
+      height: $btnSizeTablet;
+    }
+    @include onDesktop {
+      height: $btnSizeDesktop;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+      border-color: var(--text);
+    }
+    &:active {
+      @include brightness;
+    }
+
+    &#nextWeek {
+      @include onTablet {
+        margin-right: 40px;
+      }
+    }
+
+    &--exit {
+      display: none;
+      font-weight: 900;
+      color: var(--header);
+      border-radius: 30px;
+      width: $btnSizeMobile * 2;
+    }
+  }
+
+  &__account-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    .calendar__account-name {
+      color: var(--current-day);
+      font-size: 1.5rem;
+      cursor: pointer;
+      @include transition;
+    }
+
+    .calendar__account-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: var(--cell);
+      color: var(--text);
+      list-style: none;
+      padding: 0;
+      margin: 5px 0 0;
+      display: none;
+      width: 150px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+      z-index: 2;
+
+      &--open {
+        display: block;
+      }
+
+      & li {
+        padding: 10px;
+        cursor: pointer;
+        @include transition;
+        background-color: inherit;
+        color: inherit;
+        position: relative;
+
+        &::after {
+          content: "";
+          width: 0;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          height: 3px;
+          background-color: var(--text);
+          @include transition;
+        }
+
+        &:hover {
+          box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+
+          &::after {
+            width: 100%;
+          }
+        }
+
+        &:active {
+          @include brightness;
+        }
+      }
+    }
+
+    #account {
+      background-image: url("../imgs/light-account.svg");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 80%;
+      position: relative;
+
+      html[data-theme="dark"] & {
+        background-image: url("../imgs/dark-account.svg");
+      }
+    }
+  }
+
+  &__grid {
+    flex: 1;
+    display: grid;
+    gap: 20px;
+    margin-bottom: 20px;
+
+    @include onTablet {
+      margin-bottom: 50px;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: minmax(120px, auto);
+    }
+
+    @include onDesktop {
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: minmax(120px, auto);
+    }
+
+    @include onLargeDesktop {
+      grid-template-columns: repeat(5, 1fr);
+      grid-auto-rows: minmax(120px, auto);
+    }
+
+    .day {
+      display: flex;
+      flex-direction: column;
+      gap: $gapTaskDay;
+      font-size: 1.5rem;
+      @include correctSizeDayTask(2);
+
+      @include onTablet {
+        @include correctSizeDayTask(3);
+      }
+
+      @include onDesktop {
+        @include correctSizeDayTask(4);
+      }
+
+      @include onLargeDesktop {
+        @include correctSizeDayTask(6);
+      }
+
+      &__title {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 900;
+        color: var(--cell-header);
+        border-bottom: 3px solid var(--cell-header);
+        cursor: pointer;
+
+        & * {
+          cursor: inherit;
+        }
+      }
+
+      &__content {
+        $gapScrollbar: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: $gapTaskDay;
+        padding-right: $gapScrollbar;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+          width: 8px;
+          margin-left: $gapScrollbar;
+
+          &-track {
+            background: var(--header);
+            border-radius: 10px;
+          }
+
+          &-thumb {
+            background: var(--cell-header);
+            border-radius: 10px;
+            cursor: grab;
+
+            &:hover {
+              background: var(--deco-text);
+            }
+            &:active {
+              cursor: grabbing;
+            }
+          }
+        }
+      }
+
+      @include normalizerInputs;
+
+      &__task-text {
+        padding-right: 40px;
+        font-size: 1rem;
+
+        &--main {
+          padding-right: 10px;
+        }
+
+        &.done {
+          color: var(--deco-text);
+          text-decoration: line-through;
+        }
+      }
+    }
+  }
+
+  #today {
+    .day {
+      &__title {
+        color: var(--current-day);
+        border-color: var(--current-day);
+      }
+      &__task-block {
+        &::after {
+          background-color: var(--current-day);
+        }
+      }
+    }
+  }
+
+  &__footer {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+
+    @include onDesktop {
+      gap: 50px;
+    }
+  }
+}

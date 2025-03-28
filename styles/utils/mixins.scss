@@ -1,0 +1,95 @@
+@use "../theme/colorVariables.css";
+@use "./vars.scss" as *;
+
+@mixin transition($property: all, $duration: 0.3s, $timing: linear) {
+  html.loaded & {
+    transition: $property $duration $timing;
+  }
+}
+
+@mixin wrapperContent {
+  min-width: 320px;
+  max-width: 1920px;
+  min-height: 100vh;
+  width: 100%;
+  height: 100%;
+}
+
+@mixin normalizerInputs {
+  &__task-block {
+    width: 100%;
+    border: none;
+
+    @include afterEffect;
+  }
+
+  &__task-text {
+    height: $taskBlockHeight;
+    font-size: 1.2rem;
+    width: 100%;
+    background-color: var(--background);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: var(--text);
+    cursor: text;
+    outline: none;
+  }
+}
+
+@mixin afterEffect {
+  & {
+    position: relative;
+  }
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background-color: var(--cell-header);
+  }
+}
+
+@mixin normalizerDateInputs {
+  input[type="date"] {
+    background-color: var(--background);
+    color: var(--text);
+    font-size: 1rem;
+    font-family: initial;
+    font-weight: initial;
+    border: none;
+    outline: none;
+    padding: 10px;
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    &::-webkit-calendar-picker-indicator {
+      cursor: inherit;
+    }
+  }
+}
+
+@mixin brightness {
+  filter: brightness(80%);
+}
+
+@mixin onTablet {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin onDesktop {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin onLargeDesktop {
+  @media (min-width: 1440px) {
+    @content;
+  }
+}

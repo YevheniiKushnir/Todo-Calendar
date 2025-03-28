@@ -1,0 +1,14 @@
+@use "./utils/utils.scss" as *;
+@use "./theme/colorVariables.css";
+
+@use "./blocks/theme-switcher.scss";
+@use "./blocks/checkbox.scss";
+@use "./blocks/custon-alert.scss";
+@use "./blocks/loginForm.scss";
+@use "./blocks/calendar.scss";
+@use "./blocks/fullDescription.scss";
+@use "./blocks/sometime.scss";
+
+body.no-scroll {
+  overflow-y: hidden;
+}

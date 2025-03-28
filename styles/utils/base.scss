@@ -1,0 +1,13 @@
+@use "../theme/colorVariables.css";
+@use "./mixins.scss" as *;
+
+html {
+  font-family: "Atkinson Hyperlegible Mono", serif;
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--text);
+  background-color: var(--background);
+  min-height: 100vh;
+  @include wrapperContent;
+  margin: 0 auto;
+}

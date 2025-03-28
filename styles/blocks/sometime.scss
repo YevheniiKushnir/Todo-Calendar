@@ -1,0 +1,47 @@
+@use "../utils/utils.scss" as *;
+@use "../theme/colorVariables.css";
+
+.sometime {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  gap: 20px;
+
+  @include onTablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include onLargeDesktop {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include normalizerInputs;
+
+  &__task-block {
+    display: grid;
+    align-items: center;
+    row-gap: 10px;
+    grid-template-columns: 1fr;
+    grid-template-areas: "taskText tools";
+  }
+
+  &__task-text {
+    padding-right: 10px;
+    min-height: 100%;
+    resize: none;
+    grid-area: taskText;
+    font-size: 1.2rem;
+    font-family: initial;
+    font-weight: initial;
+    color: var(--text);
+
+    &.done {
+      text-decoration: line-through;
+    }
+  }
+  &__task-tools {
+    display: flex;
+    gap: 5px;
+    height: 100%;
+    grid-area: tools;
+  }
+}
